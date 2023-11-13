@@ -6,7 +6,7 @@
 /*   By: jsanger <jsanger@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 21:05:48 by jsanger           #+#    #+#             */
-/*   Updated: 2023/11/13 10:40:41 by jsanger          ###   ########.fr       */
+/*   Updated: 2023/11/13 19:28:21 by jsanger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,17 +53,23 @@ bool	init(t_shell *sh, int argc, char **env)
 
 void	loop(t_shell *sh)
 {
+	t_list	**lst;
+
+	lst = NULL;
 	while (1)
 	{
 		sh->input = readline("minishell> ");
 		if (sh->input && *sh->input)
 		{
-			if (quote_check(sh))
+			if (quote_check(sh) == false)
 				continue ;
-			check_input(sh);
-			printf("%s\n", sh->input);
+			lst = check_input(sh);
+			if (sh->tokens == 0)
+				printf("No Tokens\n");
 			add_history(sh->input);
 			free(sh->input);
+			if (!(lst == NULL))
+				deallocate(lst);
 		}
 	}
 }
