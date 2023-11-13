@@ -6,7 +6,7 @@
 /*   By: jsanger <jsanger@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 21:05:48 by jsanger           #+#    #+#             */
-/*   Updated: 2023/11/13 19:28:21 by jsanger          ###   ########.fr       */
+/*   Updated: 2023/11/13 20:32:21 by jsanger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,17 @@ bool	quote_check(t_shell *sh)
 	return (true);
 }
 
-bool	init(t_shell *sh, int argc, char **env)
+bool	init(t_shell *sh, int argc, char **argv, char **env)
 {
-	if (argc > 1)
+	if (argv)
 	{
-		printf("Too many arguments!\n");
-		exit(1);
+		if (argc > 1)
+		{
+			printf("Too many arguments!\n");
+			exit(1);
+		}
+		sh->env = get_env(env);
 	}
-	sh->env = get_env(env);
 	return (true);
 }
 
@@ -65,7 +68,7 @@ void	loop(t_shell *sh)
 				continue ;
 			lst = check_input(sh);
 			if (sh->tokens == 0)
-				printf("No Tokens\n");
+				ft_no_tokens(sh);
 			add_history(sh->input);
 			free(sh->input);
 			if (!(lst == NULL))
@@ -78,6 +81,6 @@ int	main(int argc, char **argv, char **env)
 {
 	t_shell	sh;
 
-	init(&sh, argc, env);
+	init(&sh, argc, argv, env);
 	loop(&sh);
 }

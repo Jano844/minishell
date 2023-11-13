@@ -6,7 +6,7 @@
 /*   By: jsanger <jsanger@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 10:41:25 by jsanger           #+#    #+#             */
-/*   Updated: 2023/11/13 19:26:11 by jsanger          ###   ########.fr       */
+/*   Updated: 2023/11/13 20:14:54 by jsanger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	lst_word(t_list **lst, char *arg, int i)
 		&& arg[i] != '\t' && arg[i] != '<' && arg[i] != '>'
 		&& arg[i] != '|' && arg[i] != '\"' && arg[i] != '\'')
 	{
-		str = ft_strjoin(str, arg[i]);
+		str = str_plus_char(str, arg[i]);
 		i++;
 		count++;
 	}

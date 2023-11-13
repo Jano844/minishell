@@ -6,7 +6,7 @@
 /*   By: jsanger <jsanger@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 21:07:05 by jsanger           #+#    #+#             */
-/*   Updated: 2023/11/13 19:22:58 by jsanger          ###   ########.fr       */
+/*   Updated: 2023/11/13 20:31:23 by jsanger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <stdbool.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include "libft/libft.h"
+# include "ft_printf/ft_printf.h"
 
 typedef struct s_shell
 {
@@ -49,6 +51,14 @@ t_list		**check_input(t_shell *sh);
 int			add_tokens_to_lst(t_list **lst, t_shell *sh, char *c);
 
 // temp
-char		*ft_strjoin(char *s1, char c);
+char		*str_plus_char(char *s1, char c);
+
+// get_path
+char		*get_path(char *cmd, char **env);
+char		*ft_getenv(char **env, char *path);
+
+// execute
+void		exec(char *cmd, char **env);
+void		ft_no_tokens(t_shell *sh);
 
 #endif

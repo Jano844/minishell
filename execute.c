@@ -1,35 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   temp.c                                             :+:      :+:    :+:   */
+/*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jsanger <jsanger@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/13 12:58:43 by jsanger           #+#    #+#             */
-/*   Updated: 2023/11/13 20:14:36 by jsanger          ###   ########.fr       */
+/*   Created: 2023/11/13 20:25:39 by jsanger           #+#    #+#             */
+/*   Updated: 2023/11/13 20:33:23 by jsanger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*str_plus_char(char *s1, char c)
+void	ft_no_tokens(t_shell *sh)
 {
-	unsigned int	len1;
-	char			*str;
+	int	pid;
 
-	len1 = strlen(s1);
-	str = malloc(sizeof(char) * (len1 + 2));
-	if (str == 0)
-		return (NULL);
-	len1 = 0;
-	while (s1[len1] != '\0')
+	pid = fork();
+	if (pid == 0)
+		exec(sh->input, sh->env);
+	if (pid != 0)
+		waitpid(pid, NULL, 0);
+}
+
+void	exec(char *cmd, char **env)
+{
+	char	**s_cmd;
+	char	*path;
+
+	s_cmd = ft_split(cmd, ' ');
+	path = get_path(s_cmd[0], env);
+	if (execve(path, s_cmd, env) == -1)
 	{
-		str[len1] = s1[len1];
-		len1++;
+		ft_putstr_fd("pipex: command not found: ", 2);
+		ft_putendl_fd(s_cmd[0], 2);
+		free_2d_array(s_cmd);
+		exit(0);
 	}
-	str[len1] = c;
-	len1++;
-	str[len1] = '\0';
-	free(s1);
-	return (str);
 }
