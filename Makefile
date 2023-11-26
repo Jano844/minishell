@@ -1,54 +1,73 @@
-CC = cc
-#CFLAGS = -Wall -Wextra -Werror
-LDFLAGS = -lreadline
-NAME = minishell
+NAME				=	minishell
 
-SRCS = test.c check_input.c get_path.c list_utils.c temp.c utils.c execute.c
+COMPILE				=	cc -g
 
-OBJS = $(SRCS:.c=.o)
+#-g -fsanitize=address -fno-omit-frame-pointer
 
-LIBFT_REPO = https://github.com/Jano844/42Project01.git
-LIBFT_DIR = libft
-LIBFT_MAKE = $(LIBFT_DIR)/Makefile
-LIBFT_TARGET = $(LIBFT_DIR)/libft.a
+# FLAGS				=	-Wall -Wextra -Werror
 
-PRINTF_REPO = https://github.com/Jano844/ft_printf.git
-PRINTF_DIR = ft_printf
-PRINTF_MAKE = $(PRINTF_DIR)/Makefile
-PRINTF_TARGET = $(PRINTF_DIR)/libftprintf.a13.376935
+LDFLAGS				= 	-lreadline
+
+COLOR_RESET			=	\033[0m
+COLOR_CYAN			=	\033[36m
+COLOR_GREEN			=	\033[32m
+COLOR_RED			=	\033[31m
+
+INCLUDE				=	libft/
+
+SRCS_FOLDER			=	srcs/
+
+SRCS_CD				=	own_cd
+SRCS_ECHO			=	own_echo own_echo_helper
+SRCS_ENV			=	own_env
+SRCS_EXPORT			=	own_export export_helper
+SRCS_HEREDOC		=	heredoc
+SRCS_REDIR			=	cut_redir_outfile cut_string_infile get_file last_builtin last_redir redir_helper_1 redir_helper_2
+SRCS_PIPES			=	only_pipes pipex
+SRCS_MODDED_Q		=	modded_split_for_qoutes split_helper
+SRCS_MODDED			=	modded_split_lst modded_split_pipe
+SRCS_MAIN			=	main loop
+SRCS_UTILS			=	check_input get_path utils_1 utils_2 utils_3 execute check_quotes no_tokens check_builtins
+
+SRCS				=	$(addsuffix .c, $(addprefix builtins/cd/, $(SRCS_CD))) \
+						$(addsuffix .c, $(addprefix builtins/echo/, $(SRCS_ECHO))) \
+						$(addsuffix .c, $(addprefix builtins/env/, $(SRCS_ENV))) \
+						$(addsuffix .c, $(addprefix builtins/export/, $(SRCS_EXPORT))) \
+						$(addsuffix .c, $(addprefix builtins/heredoc/, $(SRCS_HEREDOC))) \
+						$(addsuffix .c, $(addprefix redirects/, $(SRCS_REDIR))) \
+						$(addsuffix .c, $(addprefix pipes/, $(SRCS_PIPES))) \
+						$(addsuffix .c, $(addprefix modded/quotes/, $(SRCS_MODDED_Q))) \
+						$(addsuffix .c, $(addprefix modded/, $(SRCS_MODDED))) \
+						$(addsuffix .c, $(addprefix main/, $(SRCS_MAIN))) \
+						$(addsuffix .c, $(addprefix utils/, $(SRCS_UTILS))) \
+
+OBJS				=	$(addprefix $(SRCS_FOLDER),$(SRCS:.c=.o))
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(LIBFT_TARGET) $(PRINTF_TARGET)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -L$(LIBFT_DIR) -lft -L$(PRINTF_DIR) -lftprintf $(LDFLAGS)
+$(NAME):			$(INCLUDE) $(OBJS)
+					@cd $(INCLUDE) && make
+					@$(COMPILE) $(FLAGS) -o $(NAME) $(OBJS) -L$(INCLUDE) -lft $(LDFLAGS)
+					@echo "$(COLOR_CYAN)Kompilierung abgeschlossen: $(NAME)$(COLOR_RESET)"
 
-$(LIBFT_TARGET):
-	@if [ ! -d $(LIBFT_DIR) ]; then \
-		echo "Cloning libft repository..."; \
-		git clone $(LIBFT_REPO) $(LIBFT_DIR); \
-	fi
-	@$(MAKE) -C $(LIBFT_DIR)
-
-$(PRINTF_TARGET):
-	@if [ ! -d $(PRINTF_DIR) ]; then \
-		echo "Cloning ft_printf repository..."; \
-		git clone $(PRINTF_REPO) $(PRINTF_DIR); \
-	fi
-	@$(MAKE) -C $(PRINTF_DIR)
-
-# Add $(LIBFT_TARGET) and $(PRINTF_TARGET) as prerequisites for $(OBJS)
-$(OBJS): $(LIBFT_TARGET) $(PRINTF_TARGET)
+%.o: %.c
+					@$(COMPILE) $(FLAGS) -c $< -o $@
+					@echo "$(COLOR_GREEN)Kompilierung abgeschlossen: $@$(COLOR_RESET)"
 
 clean:
-	rm -f $(OBJS)
-	@$(MAKE) -C $(LIBFT_DIR) clean
-	@$(MAKE) -C $(PRINTF_DIR) clean
+					@echo "$(COLOR_RED)Cleanup MiniShell.$(COLOR_RESET)"
+					@rm -f $(OBJS)
+					@echo "$(COLOR_RED)Cleanup Libft.$(COLOR_RESET)"
+					@cd $(INCLUDE) && make clean
+					@echo "$(COLOR_GREEN)Cleanup completed.$(COLOR_RESET)"
 
-fclean: clean
-	rm -f $(NAME)
-	@$(MAKE) -C $(LIBFT_DIR) fclean
-	@$(MAKE) -C $(PRINTF_DIR) fclean
+fclean:				clean
+					@echo "$(COLOR_RED)Start Full-Clean.$(COLOR_RESET)"
+					@rm -f $(NAME)
+					@echo "$(COLOR_RED)Full-Clean Libft.$(COLOR_RESET)"
+					@cd $(INCLUDE) && make fclean
+					@echo "$(COLOR_GREEN)Full-Clean completed.$(COLOR_RESET)"
 
-re: fclean all
+re:					fclean all
 
-.PHONY: all clean fclean re
+.PHONY:				all clean fclean re

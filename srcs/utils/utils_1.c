@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsanger <jsanger@student.42.fr>            +#+  +:+       +#+        */
+/*   By: slippert <slippert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 21:54:53 by jsanger           #+#    #+#             */
-/*   Updated: 2023/11/13 10:40:06 by jsanger          ###   ########.fr       */
+/*   Updated: 2023/11/24 15:07:03 by slippert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../include/minishell.h"
 
 char	**get_env(char **env_stack)
 {
@@ -20,15 +20,14 @@ char	**get_env(char **env_stack)
 
 	i = 0;
 	array_len = array_2d_len(env_stack);
-	env = malloc(sizeof(char *) * (array_len + 1));
+	env = ft_calloc(sizeof(char *), 1024);
 	if (env == NULL)
 		return (NULL);
-	while (i < array_len)
+	while (env_stack[i])
 	{
-		env[i] = strdup(env_stack[i]);
+		env[i] = ft_strdup(env_stack[i]);
 		i++;
 	}
-	env[i] = NULL;
 	return (env);
 }
 
@@ -38,12 +37,7 @@ void	free_2d_array(char **arr)
 
 	i = 0;
 	while (arr[i] != NULL)
-		i++;
-	while (i > 0)
-	{
-		free(arr[i]);
-		i--;
-	}
+		free(arr[i++]);
 	free(arr);
 }
 
@@ -55,4 +49,22 @@ int	array_2d_len(char **arr)
 	while (arr[i] != NULL)
 		i++;
 	return (i);
+}
+
+char	*ft_strjoin_nl(char *old, char *line)
+{
+	int		i;
+	int		j;
+	char	*new;
+
+	new = ft_calloc(ft_strlen(old) + ft_strlen(line) + 10, 1);
+	i = -1;
+	while (old[++i])
+		new[i] = old[i];
+	j = 0;
+	while (line[j])
+		new[i++] = line[j++];
+	new[i++] = '\n';
+	free(old);
+	return (new);
 }

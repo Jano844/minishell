@@ -1,35 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   temp.c                                             :+:      :+:    :+:   */
+/*   check_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jsanger <jsanger@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/13 12:58:43 by jsanger           #+#    #+#             */
-/*   Updated: 2023/11/13 20:14:36 by jsanger          ###   ########.fr       */
+/*   Created: 2023/11/13 10:41:25 by jsanger           #+#    #+#             */
+/*   Updated: 2023/11/23 21:43:46 by jsanger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../include/minishell.h"
 
-char	*str_plus_char(char *s1, char c)
+void	check_input(t_shell *sh, char *input)
 {
-	unsigned int	len1;
-	char			*str;
+	int		i;
 
-	len1 = strlen(s1);
-	str = malloc(sizeof(char) * (len1 + 2));
-	if (str == 0)
-		return (NULL);
-	len1 = 0;
-	while (s1[len1] != '\0')
+	sh->tokens = 0;
+	i = 0;
+	while (input[i] != '\0')
 	{
-		str[len1] = s1[len1];
-		len1++;
+		if (input[i] == '|')
+			sh->tokens++;
+		i++;
 	}
-	str[len1] = c;
-	len1++;
-	str[len1] = '\0';
-	free(s1);
-	return (str);
+	free(input);
 }
