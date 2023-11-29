@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   modded_split_lst.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsanger <jsanger@student.42.fr>            +#+  +:+       +#+        */
+/*   By: slippert <slippert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 15:10:31 by jsanger           #+#    #+#             */
-/*   Updated: 2023/11/23 16:40:44 by jsanger          ###   ########.fr       */
+/*   Updated: 2023/11/27 22:00:43 by slippert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ char	*connect(char *input)
 	char	**s;
 
 	s = parse_input_lst(input, 0);
-	res = strdup("");
+	res = ft_strdup("");
 	i = 0;
 	while (s[i] != NULL)
 	{

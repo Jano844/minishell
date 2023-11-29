@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   no_tokens.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsanger <jsanger@student.42.fr>            +#+  +:+       +#+        */
+/*   By: slippert <slippert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 14:41:16 by slippert          #+#    #+#             */
-/*   Updated: 2023/11/27 00:02:23 by jsanger          ###   ########.fr       */
+/*   Updated: 2023/11/28 19:37:31 by slippert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	byte_read(t_shell *sh)
 			break ;
 		write(1, &c, 1);
 	}
-	unlink(HERE_PATH);
 }
 
 void	ft_no_tokens(t_shell *sh)
@@ -50,21 +49,24 @@ void	ft_no_tokens(t_shell *sh)
 	char	**s_cmd;
 
 	heredoc(sh);
-	if (redir_test(sh))
+	if (sh->input && sh->input[0] && redir_test(sh))
 		return ;
-	if (sh->is_heredoc)
+	if (sh->is_heredoc && sh->input)
 	{
 		sh->heredoc_fd = open(HERE_PATH, O_RDONLY);
-		byte_read(sh);
+		if (sh->is_cat)
+			byte_read(sh);
 		close(sh->heredoc_fd);
+		unlink(HERE_PATH);
 	}
-	else
+	else if (sh->input && sh->input[0])
 	{
 		s_cmd = der_grosse_bruder(sh->input);
 		check_builtins(sh, s_cmd);
 		free_2d_array(s_cmd);
 	}
-	buildin_test(sh);
+	if (sh->input && sh->input[0])
+		buildin_test(sh);
 	sh->is_builtin = 0;
 	reset_fd(sh);
 }

@@ -6,7 +6,7 @@
 /*   By: slippert <slippert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 09:54:17 by slippert          #+#    #+#             */
-/*   Updated: 2023/11/24 19:06:43 by slippert         ###   ########.fr       */
+/*   Updated: 2023/11/27 17:38:13 by slippert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ static void	echo_helper(t_shell *sh, char **command, int *i)
 	}
 }
 
-static void	echo_nl(char **command, int i, int *no_nl)
+static void	echo_nl(char **command, int *i, int *no_nl)
 {
-	if (!ft_strncmp(command[i], "-n", 2))
+	if (!ft_strncmp(command[*i], "-n\0", 3))
 	{
-		command[i] += ft_strcontainchar(command[i], 'n');
 		*no_nl = 1;
+		*i += 1;
 	}
 }
 
@@ -59,7 +59,7 @@ void	own_echo(t_shell *sh, char **command, int is_splitted)
 		ft_printf("\n");
 	else
 	{
-		echo_nl(command, i, &no_nl);
+		echo_nl(command, &i, &no_nl);
 		while (command[i])
 		{
 			echo_helper(sh, command, &i);

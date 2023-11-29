@@ -6,7 +6,7 @@
 /*   By: slippert <slippert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 15:19:36 by slippert          #+#    #+#             */
-/*   Updated: 2023/10/12 09:22:57 by slippert         ###   ########.fr       */
+/*   Updated: 2023/11/27 15:25:22 by slippert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@ int	ft_strlen(const char *s)
 	int	count;
 
 	count = 0;
-	while (*s++)
+	while (s && *s++)
 		count++;
 	return (count);
 }

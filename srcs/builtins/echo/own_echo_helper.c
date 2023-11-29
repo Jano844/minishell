@@ -6,7 +6,7 @@
 /*   By: slippert <slippert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 10:10:36 by slippert          #+#    #+#             */
-/*   Updated: 2023/11/24 19:07:16 by slippert         ###   ########.fr       */
+/*   Updated: 2023/11/27 18:41:14 by slippert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,6 @@ void	own_dollar(t_shell *sh, char *command)
 			temp = ft_strnstr(sh->env[j], "=", ft_strlen(command));
 			ft_printf("%s", ++temp);
 		}
+		free(command);
 	}
 }

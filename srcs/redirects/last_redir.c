@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   last_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsanger <jsanger@student.42.fr>            +#+  +:+       +#+        */
+/*   By: slippert <slippert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 11:26:34 by jsanger           #+#    #+#             */
-/*   Updated: 2023/11/27 00:11:07 by jsanger          ###   ########.fr       */
+/*   Updated: 2023/11/27 17:32:54 by slippert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,24 @@
 
 char	*is_last_redir(char *cmd, char c, int i, int check)
 {
-	int	temp;
-	int	append;
+	int		temp;
+	int		append;
 
 	append = 10241024;
 	temp = 0;
-	while (cmd[i] && (cmd[i] != c || (check == (append == i - 1))))
+	while (cmd[i])
 	{
 		if (cmd[i] == '\'' || cmd[i] == '\"')
 			i += count_while_in_qoutes(cmd, cmd[i], i);
-		else if (cmd[i] == '\0')
+		if (cmd[i] == '\0')
 			break ;
 		if (cmd[i] == c)
 		{
+			append = i;
 			if (i != 0 && cmd[i - 1] == c)
-				append = i - 1;
+				check = 1;
 			else
-				append = i;
+				check = 0;
 		}
 		i++;
 	}

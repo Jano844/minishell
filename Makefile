@@ -1,10 +1,8 @@
 NAME				=	minishell
 
-COMPILE				=	cc -g
+COMPILE				=	cc
 
-#-g -fsanitize=address -fno-omit-frame-pointer
-
-# FLAGS				=	-Wall -Wextra -Werror
+FLAGS				=	-Wall -Wextra -Werror
 
 LDFLAGS				= 	-lreadline
 
@@ -21,7 +19,7 @@ SRCS_CD				=	own_cd
 SRCS_ECHO			=	own_echo own_echo_helper
 SRCS_ENV			=	own_env
 SRCS_EXPORT			=	own_export export_helper
-SRCS_HEREDOC		=	heredoc
+SRCS_HEREDOC		=	heredoc heredoc_helper
 SRCS_REDIR			=	cut_redir_outfile cut_string_infile get_file last_builtin last_redir redir_helper_1 redir_helper_2
 SRCS_PIPES			=	only_pipes pipex
 SRCS_MODDED_Q		=	modded_split_for_qoutes split_helper

@@ -2,7 +2,7 @@ NAME				=	libft.a
 
 FLAGS				=	-Wall -Wextra -Werror
 
-COMPILE				=	cc -g
+COMPILE				=	cc
 
 COLOR_RESET			=	\033[0m
 COLOR_CYAN			=	\033[36m

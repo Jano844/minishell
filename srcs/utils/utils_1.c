@@ -6,7 +6,7 @@
 /*   By: slippert <slippert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 21:54:53 by jsanger           #+#    #+#             */
-/*   Updated: 2023/11/24 15:07:03 by slippert         ###   ########.fr       */
+/*   Updated: 2023/11/27 16:56:25 by slippert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	**get_env(char **env_stack)
 	env = ft_calloc(sizeof(char *), 1024);
 	if (env == NULL)
 		return (NULL);
-	while (env_stack[i])
+	while (env_stack && env_stack[i])
 	{
 		env[i] = ft_strdup(env_stack[i]);
 		i++;

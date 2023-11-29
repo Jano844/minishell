@@ -6,7 +6,7 @@
 /*   By: slippert <slippert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 11:13:27 by jsanger           #+#    #+#             */
-/*   Updated: 2023/11/24 12:18:44 by slippert         ###   ########.fr       */
+/*   Updated: 2023/11/27 22:00:48 by slippert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	*trim_and_conect(char **s)
 	int		i;
 	char	*res;
 
-	res = strdup("");
+	res = ft_strdup("");
 	i = 0;
 	while (s[i] != NULL)
 	{

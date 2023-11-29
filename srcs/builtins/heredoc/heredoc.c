@@ -6,7 +6,7 @@
 /*   By: slippert <slippert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 10:15:30 by slippert          #+#    #+#             */
-/*   Updated: 2023/11/24 19:08:59 by slippert         ###   ########.fr       */
+/*   Updated: 2023/11/27 21:19:36 by slippert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ static void	update_input(t_shell *sh, char *second, char *third)
 	free(sh->input);
 	sh->input = ft_strnstr(temp, third, ft_strlen(temp));
 	sh->input = ft_substr(sh->input, ft_strlen(third), ft_strlen(sh->input));
+	if (!*sh->input)
+		free(sh->input);
 }
 
 static char	*get_delim(char **command, int deli_pos)
@@ -64,13 +66,15 @@ static void	ft_helper(t_shell *sh, char **command, char *delim, int action_pos)
 	close(sh->heredoc_fd);
 	if (ft_strcmp(command[action_pos], "cat"))
 	{
+		sh->is_cat = 0;
 		free(sh->input);
 		sh->input = ft_strjoin(command[action_pos], " ");
 	}
-	else
+	else if (++sh->is_cat)
 		update_input(sh, command[1], command[2]);
 }
 
+// || (command && ft_strnstr_bool(command[0], "<<", ft_strlen(command[0]))))
 void	heredoc(t_shell *sh)
 {
 	char	**command;
@@ -79,8 +83,9 @@ void	heredoc(t_shell *sh)
 	int		action_pos;
 
 	command = der_grosse_bruder(sh->input);
-	if (command && command[1] && (!ft_strncmp(command[0], "<<", 2)
-			|| !ft_strncmp(command[1], "<<", 2)))
+	command = kleiner_zwilling(command);
+	if ((command && command[1] && (!ft_strncmp(command[0], "<<", 2)
+				|| !ft_strncmp(command[1], "<<", 2))))
 	{
 		deli_pos = 0;
 		action_pos = 0;

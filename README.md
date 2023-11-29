@@ -1,4 +1,7 @@
 # Minishell
+
+![minishell](https://github.com/byaliego/42-project-badges/blob/main/badges/minishellm.png?raw=true)
+
 ```c
 #include <stdio.h>
 
@@ -13,14 +16,14 @@ int	main(void)
 {
 	if (show_contributor("Jan", "https://github.com/Jano844"))
 		return (1);
-	if (show_contributor("Steven", "https://github.com/ShiiikK"))
+	if (show_contributor("Steven", "https://github.com/Steven-L-42"))
 		return (1);
 	return (0);
 }
 
 // expected output:
 // 👨‍💻 Contributor: Jan | GitHub: https://github.com/Jano844
-// 👨‍💻 Contributor: Steven | GitHub: https://github.com/ShiiikK
+// 👨‍💻 Contributor: Steven | GitHub: https://github.com/Steven-L-42
 ```
 ## Beschreibung
 Minishell ist eine einfache Shell, die grundlegende Funktionen einer Shell implementiert.

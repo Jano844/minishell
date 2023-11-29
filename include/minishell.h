@@ -6,7 +6,7 @@
 /*   By: slippert <slippert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 22:05:37 by jsanger           #+#    #+#             */
-/*   Updated: 2023/11/25 14:12:53 by slippert         ###   ########.fr       */
+/*   Updated: 2023/11/27 21:08:47 by slippert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,9 @@
 # include <stdlib.h>
 # include <stdbool.h>
 # include <fcntl.h>
-# include <readline/readline.h>
-# include <readline/history.h>
 # include "../libft/srcs/libft.h"
 # include <readline/readline.h>
+# include <readline/history.h>
 
 # define STDIN 0
 # define STDOUT 1
@@ -49,7 +48,7 @@ typedef struct s_shell
 	char	*usr_path;
 	char	*own_path;
 	char	*shell_name;
-
+	int		is_cat;
 	int		stdout_saved;
 	int		stdin_saved;
 	int		outfile;
@@ -58,7 +57,7 @@ typedef struct s_shell
 
 bool		quote_check(t_shell *sh);
 int			loop(t_shell *sh);
-
+void		init(t_shell *sh, int argc, char **argv, char **env);
 // utils
 char		**get_env(char **env_stack);
 void		free_2d_array(char **arr);
@@ -148,5 +147,6 @@ int			count_while_in_qoutes(char *cmd, char c, int i);
 
 // heredoc
 void		heredoc(t_shell *sh);
+char		**kleiner_zwilling(char **command);
 
 #endif

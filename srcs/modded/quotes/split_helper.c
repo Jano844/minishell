@@ -6,7 +6,7 @@
 /*   By: slippert <slippert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 12:01:50 by slippert          #+#    #+#             */
-/*   Updated: 2023/11/24 14:14:39 by slippert         ###   ########.fr       */
+/*   Updated: 2023/11/27 15:20:18 by slippert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ char	*ft_strtrim_mod(char *s1, char c)
 	{
 		while (s1[count] == c)
 			count++;
-		s1[start_length++] = s1[count++];
+		if (s1[count] != '\0')
+			s1[start_length++] = s1[count++];
+		else
+			break ;
 	}
 	s1[start_length] = '\0';
 	return (s1);
